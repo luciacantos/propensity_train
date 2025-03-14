@@ -1,16 +1,13 @@
 import streamlit as st
+from utils.helpers import obtener_datos_usuario
 
-def mostrar_promociones(df):
-    st.title("Promociones Personalizadas")
-    
-    # Lista de promociones por segmento
-    promociones = {
-        "Muy baja": "Sin promociones asignadas.",
-        "Baja": "Descuento del 5% en la próxima compra.",
-        "Media": "Oferta 2x1 en productos seleccionados.",
-        "Alta": "Acceso a eventos privados y 10% de descuento.",
-        "Muy alta": "Descuentos exclusivos y acceso VIP a lanzamientos."
-    }
+st.title("🔥 Promociones Personalizadas")
 
-    segmento = st.selectbox("Selecciona un segmento:", list(promociones.keys()))
-    st.write(f"**Promociones para clientes {segmento}:** {promociones[segmento]}")
+usuario = obtener_datos_usuario()
+st.write("🎯 Ofertas solo para ti:")
+for promo in usuario["promociones"]:
+    st.markdown(f"- **{promo}**")
+
+
+st.markdown("---")
+st.write("¡Aprovecha estas promociones antes de que terminen! ⏳")

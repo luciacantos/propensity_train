@@ -1,21 +1,13 @@
 import streamlit as st
+from utils.helpers import obtener_datos_usuario
 
-def mostrar_beneficios(df):
-    st.title("Beneficios para Clientes")
-    
-    # Gráfico de distribución de clientes por segmento
-    st.subheader("Distribución de Clientes por Segmento")
-    segment_counts = df["Segmento"].value_counts()
-    st.bar_chart(segment_counts)
-    
-    # Explicación de beneficios
-    beneficios = {
-        "Muy baja": "Sin beneficios asignados.",
-        "Baja": "Emails con promociones leves.",
-        "Media": "Acceso a descuentos y promociones.",
-        "Alta": "Beneficios exclusivos y soporte premium.",
-        "Muy alta": "Acceso VIP a eventos y mejores precios."
-    }
+st.title("🎁 Tus Beneficios")
 
-    segmento = st.selectbox("Selecciona un segmento:", list(beneficios.keys()))
-    st.write(f"**Beneficios para clientes {segmento}:** {beneficios[segmento]}")
+usuario = obtener_datos_usuario()
+st.write(f"📌 Tu nivel: **{usuario['nivel']}**")
+st.write("Estos son los beneficios exclusivos para ti:")
+st.markdown(usuario["beneficios"])
+
+
+st.write("Sube de nivel y accede a más recompensas 🚀")
+

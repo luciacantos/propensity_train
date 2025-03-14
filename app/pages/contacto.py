@@ -1,13 +1,12 @@
 import streamlit as st
 
-def mostrar_contacto():
-    st.title("Contáctanos")
-    
-    with st.form("contacto_form"):
-        nombre = st.text_input("Nombre")
-        email = st.text_input("Correo electrónico")
-        mensaje = st.text_area("Mensaje")
-        submit_button = st.form_submit_button("Enviar")
-        
-        if submit_button:
-            st.success("Mensaje enviado. Te responderemos pronto.")
+st.title("📞 Contacto y Soporte")
+
+st.write("¿Tienes dudas sobre el programa de beneficios? Contáctanos:")
+
+st.write("📧 Email: soporte@empresa.com")
+st.write("📱 Teléfono: +34 600 123 456")
+
+st.markdown("---")
+
+st.write("También puedes visitar nuestras redes sociales para más información.")

@@ -1,11 +1,16 @@
-def clasificar_cliente(probabilidad):
-    if probabilidad < 0.20:
-        return "Muy baja"
-    elif 0.20 <= probabilidad < 0.40:
-        return "Baja"
-    elif 0.40 <= probabilidad < 0.60:
-        return "Media"
-    elif 0.60 <= probabilidad < 0.80:
-        return "Alta"
-    else:
-        return "Muy alta"
+def obtener_datos_usuario():
+    return {
+        "nombre": "Lucía Fernández",
+        "nivel": "Oro",
+        "puntos": 3200,
+        "dinero_gastado": 1540,
+        "beneficios": """
+        - Descuento del 20% en todas las compras
+        - Atención VIP
+        - Acceso a eventos privados
+        """,
+        "promociones": [
+            "Envío gratuito este mes",
+            "Regalo sorpresa en tu siguiente pedido"
+        ]
+    }
