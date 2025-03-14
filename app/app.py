@@ -1,42 +1,40 @@
+
+
+
 import streamlit as st
+from utils.helpers import clasificar_cliente
 import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
-import os
+import joblib
 
-# Configuración de la página
-st.set_page_config(page_title="📊 Análisis de Clientes de Coches", layout="wide")
+# Configurar la app
+st.set_page_config(page_title="Estrategia de Marketing", layout="wide")
 
-# Función para cargar datos
-@st.cache_data
-def cargar_datos():
-    ruta_csv = os.path.join("data", "Propensity_Processed.csv")  # Ajustado a tu estructura
-    return pd.read_csv(ruta_csv)
+# Cargar modelo y datos
+modelo = joblib.load("models/modelo_gradient_boosting.pkl")
+df = pd.read_csv("data/stg/Propensity_input.csv", index_col=0)
 
-# Cargar los datos
-df = cargar_datos()
+# Calcular probabilidades
+df["Propension_Compra"] = modelo.predict_proba(df)[:, 1]
+df["Segmento"] = df["Propension_Compra"].apply(clasificar_cliente)
 
-# Título
-st.title("📊 Análisis de Clientes de Coches")
+# Sidebar con navegación
+st.sidebar.title("Menú")
+pagina = st.sidebar.radio("Selecciona una página:", ["Inicio", "Área Cliente", "Beneficios", "Promociones", "Contacto"])
 
-# Mostrar tabla de datos
-st.subheader("📋 Datos de Clientes")
-st.dataframe(df)
-
-# Boxplot de Coste Venta por Segmento
-st.subheader("📊 Boxplot de Coste Venta por Segmento")
-fig, ax = plt.subplots()
-sns.boxplot(x=df["Segmento_Cliente"], y=df["COSTE_VENTA"], palette="viridis", ax=ax)
-st.pyplot(fig)
-
-# Matriz de correlaciones
-st.subheader("🔗 Matriz de Correlaciones")
-fig, ax = plt.subplots()
-sns.heatmap(df[["COSTE_VENTA", "km_anno"]].corr(), annot=True, cmap="coolwarm", fmt=".2f", ax=ax)
-st.pyplot(fig)
-
-# Scatter plot
-st.subheader("📈 Relación entre Coste Venta y KM Año")
-fig, ax = plt.subplots()
-sns.scatterplot(x=df["COSTE_VENTA"], y=df["km_anno"], hue=df["Segmento_Cliente"], palette="viridis", alpha=0.6, ax=ax)
-st.pyplot(fig)
+# Redirigir a la página seleccionada
+if pagina == "Inicio":
+    st.title("Estrategia de Marketing Basada en Probabilidad de Compra")
+    st.write("Bienvenido a la plataforma de análisis de clientes.")
+    st.image("assets/marketing_strategy.png")  # Imagen opcional
+elif pagina == "Área Cliente":
+    from pages import cliente
+    cliente.mostrar_cliente(df)
+elif pagina == "Beneficios":
+    from pages import beneficios
+    beneficios.mostrar_beneficios(df)
+elif pagina == "Promociones":
+    from pages import promociones
+    promociones.mostrar_promociones(df)
+elif pagina == "Contacto":
+    from pages import contacto
+    contacto.mostrar_contacto()
