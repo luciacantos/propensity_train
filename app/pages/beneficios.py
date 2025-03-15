@@ -1,44 +1,57 @@
 import streamlit as st
 import pandas as pd
+import altair as alt
+from utils.helpers import obtener_datos_usuario
 
-st.set_page_config(page_title="Beneficios", layout="wide")
+st.set_page_config(page_title="Tus Beneficios", layout="wide")
 
-st.title("🎁 Tus Beneficios")
+# Obtener datos del usuario
+usuario = obtener_datos_usuario()
 
-# Simulación de datos de beneficios
-datos = {
-    "Nivel": ["Básico", "Plata", "Oro", "Platino"],
-    "Descuentos (%)": [5, 10, 15, 20],
-    "Acceso VIP": [False, True, True, True],
-    "Puntos Extra": [0, 50, 100, 200]
-}
+st.title(f"🎁 Beneficios exclusivos para ti")
 
-df = pd.DataFrame(datos)
+# Mostrar beneficios personales en una tarjeta bonita
+st.subheader("🎖 Beneficios actuales")
+st.success("Estos son los beneficios que has desbloqueado hasta ahora:")
 
-# Tabs para mostrar beneficios por categoría
-tab1, tab2, tab3 = st.tabs(["💰 Descuentos", "🔝 Beneficios Exclusivos", "📊 Evolución"])
+for beneficio in usuario["beneficios"].split("\n"):
+    if beneficio.strip():
+        st.markdown(f" ✅ **{beneficio.strip()}**")
 
-with tab1:
-    st.write("A medida que subes de nivel, obtienes más descuentos:")
-    st.bar_chart(df.set_index("Nivel")["Descuentos (%)"])
+st.markdown("---")
 
-with tab2:
-    st.write("Beneficios adicionales por cada nivel:")
-    st.dataframe(df)
+# Simulación de progreso hacia el siguiente beneficio
+puntos_actuales = usuario["puntos"]
+puntos_para_extra = 5000  # Se puede cambiar según la lógica de beneficios
 
-with tab3:
-    st.write("Comparación de beneficios en cada nivel")
-    st.line_chart(df.set_index("Nivel")["Puntos Extra"])
+st.subheader("📈 Progreso hacia más beneficios")
+st.write(f"Tienes **{puntos_actuales} puntos**. Al llegar a **{puntos_para_extra} puntos**, desbloquearás más recompensas.")
 
-# Motivación: cuánto falta para el siguiente nivel
-nivel_actual = "Plata"
-puntos_actuales = 300
-puntos_requeridos = 500
+st.progress(puntos_actuales / puntos_para_extra)
 
-st.write("---")
-st.subheader("📈 ¿Cuánto te falta para mejorar de nivel?")
-st.write(f"Actualmente eres **{nivel_actual}**. Necesitas {puntos_requeridos - puntos_actuales} puntos más para subir a Oro.")
+datos_beneficios = pd.DataFrame({
+    "Beneficio": ["Descuento en compras", "Acceso VIP", "Eventos privados"],
+    "Puntos Acumulados": [2000, 1500, 500]
+})
 
-# Botón de regreso
+# Crear gráfico de barras con Altair
+chart = alt.Chart(datos_beneficios).mark_bar(cornerRadius=5).encode(
+    x="Puntos Acumulados:Q",
+    y=alt.Y("Beneficio:N", sort="-x"),
+    color=alt.value("#FFA500")
+).properties(
+    title="📊 Beneficios acumulados por categoría"
+)
+
+# Mensaje de motivación
+if puntos_actuales >= puntos_para_extra:
+    st.success("🎉 ¡Has desbloqueado un **beneficio sorpresa**! Pronto recibirás una notificación.")
+else:
+    st.warning(f"📢 Te faltan **{puntos_para_extra - puntos_actuales} puntos** para tu próxima recompensa.")
+
+st.markdown("---")
+
+# Botón de regreso a la página principal
 if st.button("⬅️ Volver a Inicio"):
     st.switch_page("app.py")
+

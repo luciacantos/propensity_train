@@ -38,17 +38,6 @@ with st.expander("🌟 María G. (Nivel Oro)"):
 with st.expander("🌟 Pedro R. (Nivel Platino)"):
     st.write("Desde que subí a Platino, me llegan ofertas personalizadas que realmente me interesan.")
 
-# Navegación
-st.subheader("📌 Explora nuestras secciones")
-col1, col2 = st.columns(2)
-
-with col1:
-    if st.button("🛍️ Área Cliente"):
-        st.switch_page("cliente.py")
-
-with col2:
-    if st.button("🎁 Beneficios"):
-        st.switch_page("beneficios.py")
 
 st.write("---")
 st.write("📌 Usa la barra lateral para moverte entre secciones.")
