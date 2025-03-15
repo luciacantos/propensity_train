@@ -14,18 +14,18 @@ st.write("Nuestros clientes tienen acceso a diferentes niveles de beneficios dep
 col1, col2, col3 = st.columns(3)
 
 with col1:
-    st.subheader("🥉 Nivel Básico")
+    st.subheader("🥈 NIVEL PLATA")
     st.write("✅ Acumula puntos por cada compra")
     st.write("✅ Acceso a ofertas especiales")
 
 with col2:
-    st.subheader("🥈 Nivel Premium")
+    st.subheader("🥇 NIVEL ORO")
     st.write("✅ Más puntos por compra")
     st.write("✅ Descuentos exclusivos")
     st.write("✅ Prioridad en lanzamientos")
 
 with col3:
-    st.subheader("🥇 Nivel Élite")
+    st.subheader("💎 NIVEL PLATINO")
     st.write("✅ Mayor acumulación de puntos")
     st.write("✅ Eventos VIP")
     st.write("✅ Asesoramiento exclusivo")
