@@ -29,20 +29,31 @@ st.write(f"Tienes **{puntos_actuales} puntos**. Al llegar a **{puntos_para_extra
 
 st.progress(puntos_actuales / puntos_para_extra)
 
+# Simulación de datos de beneficios personales
 datos_beneficios = pd.DataFrame({
-    "Beneficio": ["Descuento en compras", "Acceso VIP", "Eventos privados"],
+    "Beneficio": ["Compras", "Acceso VIP", "Eventos privados"],
     "Puntos Acumulados": [2000, 1500, 500]
 })
 
-# Crear gráfico de barras con Altair
-chart = alt.Chart(datos_beneficios).mark_bar(cornerRadius=5).encode(
-    x="Puntos Acumulados:Q",
-    y=alt.Y("Beneficio:N", sort="-x"),
-    color=alt.value("#FFA500")
-).properties(
-    title="📊 Beneficios acumulados por categoría"
-)
+# Verificar que el DataFrame no está vacío antes de graficar
+if not datos_beneficios.empty:
+    st.subheader("📊 Beneficios acumulados")
 
+    # Crear gráfico de barras con Altair
+    chart = alt.Chart(datos_beneficios).mark_bar(cornerRadius=5).encode(
+        x=alt.X("Puntos Acumulados:Q", title="Puntos Acumulados"),
+        y=alt.Y("Beneficio:N", sort="-x", title="Tipo de Beneficio"),
+        color=alt.value("#FFA500")
+    ).properties(
+        title="📊 Beneficios acumulados por categoría",
+        width=600,
+        height=400
+    )
+
+    # Mostrar gráfico en la app
+    st.altair_chart(chart, use_container_width=True)
+else:
+    st.warning("No hay beneficios acumulados disponibles.")
 # Mensaje de motivación
 if puntos_actuales >= puntos_para_extra:
     st.success("🎉 ¡Has desbloqueado un **beneficio sorpresa**! Pronto recibirás una notificación.")

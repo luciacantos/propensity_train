@@ -13,7 +13,7 @@ st.title(f"🔥 Promociones Exclusivas para ti")
 if "Descuento especial en tu próxima compra" in usuario["promociones"]:
     st.success("🎉 ¡Tienes un **descuento especial** disponible! No lo dejes pasar.")
 
-st.subheader("🎯 Ofertas solo para ti")
+st.subheader("Ofertas solo para ti")
 st.write("Aprovecha estas promociones antes de que terminen:")
 
 # Dividir las promociones en tarjetas
