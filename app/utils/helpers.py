@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 def obtener_datos_usuario():
     return {
         "nombre": "Lucía Fernández",
@@ -10,7 +12,15 @@ def obtener_datos_usuario():
         - Acceso a eventos privados
         """,
         "promociones": [
-            "Envío gratuito este mes",
-            "Regalo sorpresa en tu siguiente pedido"
+            {
+                "titulo": "Envío gratuito este mes",
+                "descripcion": "Recibe tus pedidos sin costos adicionales.",
+                "fecha_expiracion": datetime.today() + timedelta(days=10)
+            },
+            {
+                "titulo": "Regalo sorpresa en tu siguiente pedido",
+                "descripcion": "Obtén un producto especial con tu compra.",
+                "fecha_expiracion": datetime.today() + timedelta(days=5)
+            }
         ]
     }

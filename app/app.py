@@ -1,11 +1,13 @@
 import streamlit as st
 
-st.set_page_config(page_title="Inicio - Programa de Fidelidad", layout="wide")
+st.set_page_config(page_title="Programa de Fidelidad", layout="wide")
 
-st.title("🎉 Bienvenido a nuestro Programa de Fidelidad 🎉")
-st.write("Descubre todas las ventajas de ser parte de nuestra comunidad.")
+# Encabezado principal
+st.title(" Bienvenido al Programa de Fidelidad")
 
-# Niveles y beneficios
+
+
+# Explicación de niveles y beneficios
 st.subheader("📊 Beneficios por niveles")
 st.write("Nuestros clientes tienen acceso a diferentes niveles de beneficios dependiendo de su historial de compras.")
 
@@ -28,14 +30,25 @@ with col3:
     st.write("✅ Eventos VIP")
     st.write("✅ Asesoramiento exclusivo")
 
-# Redirección al área cliente
-st.sidebar.title("🔍 Navegación")
-st.sidebar.page_link("pages/cliente.py", label="Área Cliente")
+# Testimonios (usando expander)
+st.subheader("💬 Testimonios de clientes")
+with st.expander("🌟 María G. (Nivel Oro)"):
+    st.write("Gracias a este programa, he recibido descuentos exclusivos y acceso anticipado a nuevos modelos.")
 
-st.sidebar.write("---")
-st.sidebar.write("🔗 Otras Secciones:")
-st.sidebar.page_link("pages/beneficios.py", label="Beneficios")
-st.sidebar.page_link("pages/promociones.py", label="Promociones")
-st.sidebar.page_link("pages/contacto.py", label="Contacto")
+with st.expander("🌟 Pedro R. (Nivel Platino)"):
+    st.write("Desde que subí a Platino, me llegan ofertas personalizadas que realmente me interesan.")
 
+# Navegación
+st.subheader("📌 Explora nuestras secciones")
+col1, col2 = st.columns(2)
 
+with col1:
+    if st.button("🛍️ Área Cliente"):
+        st.switch_page("cliente.py")
+
+with col2:
+    if st.button("🎁 Beneficios"):
+        st.switch_page("beneficios.py")
+
+st.write("---")
+st.write("📌 Usa la barra lateral para moverte entre secciones.")
